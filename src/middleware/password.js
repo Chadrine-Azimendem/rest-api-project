@@ -23,9 +23,10 @@ passwordSchema
   .not()
   .oneOf(["Passw0rd£", "Password123$"]); // Blacklist these values
 
-console.log("passwordSchema:", passwordSchema);
+// log passwordSchema in the console
+// console.log("passwordSchema:", passwordSchema);
 
-// verify password mtches the passwordSchema
+// verify password matches the passwordSchema
 
 module.exports = async (req, res, next) => {
   try {
