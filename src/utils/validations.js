@@ -1,7 +1,7 @@
-const passwordValidator = require("password-validator");
+let passwordValidator = require("password-validator");
 
 // Create a schema
-const passwordSchema = new passwordValidator();
+let passwordSchema = new passwordValidator();
 
 // Add properties to it
 passwordSchema

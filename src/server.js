@@ -1,13 +1,15 @@
 require("./db/connection");
-
+const userRouter = require("./users/userRoutes");
 // require express library
 const express = require("express");
 
 // call express Application
 const app = express();
 
+const port = process.env.PORT || 5001;
+app.use(express.json());
+app.use(userRouter);
 // dfine a port
-const port = process.env.PORT || 5002;
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });

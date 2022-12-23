@@ -3,12 +3,6 @@ const mongoose = require("mongoose");
 //
 const Schema = mongoose.Schema;
 
-const passwordSchema = require("../utils/validations");
-
-// console.log(passwordSchema.validate("validPASS123")); //=>false
-// console.log(passwordSchema.validate("validPASS123£")); //=>true
-// console.log(passwordSchema.validate("validP ASS123£")); //=>false
-
 const userModel = new Schema({
   username: {
     type: String,
@@ -27,17 +21,10 @@ const userModel = new Schema({
   password: {
     type: String,
     require: true,
-    validate: {
-      validator: () => {
-        passwordSchema.validate(this.password);
-      },
-      message:
-        "invalid password: password must have min 8 and max 20 length, one uppercase, one lowercase, one number and one symbol",
-    },
   },
 });
 
-const User = mongoose.model("user", userModel);
+const User = mongoose.model("webpageuser", userModel);
 
 // export User
 module.exports = User;
