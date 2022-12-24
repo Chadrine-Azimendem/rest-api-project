@@ -34,13 +34,11 @@ module.exports = async (req, res, next) => {
       next();
     } else {
       throw new Error(
-        `Password invalid: ${passwordSchema.validate(`${req.body.password}`, {
-          list: true,
-        })}`
+        `Password invalid: Password must have min 8 char and a combination of uppercase, lowercase, numbers and symbols, excluding spaces`
       );
     }
   } catch (error) {
     console.log(error.message);
-    res.status(400).send({ error: error.message });
+    res.status(422).send({ error: error.message });
   }
 };
