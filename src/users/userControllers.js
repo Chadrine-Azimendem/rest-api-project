@@ -68,3 +68,19 @@ exports.deleteUser = async (req, res) => {
     res.status(501).send({ error: error.message });
   }
 };
+
+exports.userLogin = async (req, res) => {
+  console.log("middlewares passed and controller has been called");
+  try {
+    // check if the user's username exist in the database
+    const user = await User.findOne({ username: req.body.username });
+    console.log(`Success! ${user.username} exists in the database`);
+    res
+      .status(202)
+      .send({ message: `${user.username} exists in the database` });
+  } catch (error) {
+    console.log(error);
+    console.log("username not found");
+    res.status(501).send({ error: error.message });
+  }
+};
