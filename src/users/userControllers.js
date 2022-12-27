@@ -1,4 +1,5 @@
 const User = require("./userModel");
+const jwt = require("jsonwebtoken");
 
 // create a user
 exports.createUser = async (req, res) => {
@@ -75,9 +76,13 @@ exports.userLogin = async (req, res) => {
     // check if the user's username exist in the database
     const user = await User.findOne({ username: req.body.username });
     console.log(`Success! ${user.username} exists in the database`);
+
+    //generate a jwt token for the user
+    const token = await jwt.sign({ _id: user._id }, process.env.SECRET);
+    console.log(token);
     res
       .status(202)
-      .send({ message: `${user.username} exists in the database` });
+      .send({ message: `${user.username} exists in the database`, token });
   } catch (error) {
     console.log(error);
     console.log("username not found");

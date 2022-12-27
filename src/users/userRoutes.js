@@ -11,12 +11,14 @@ const {
 const { hashPassword, matchePasswds } = require("../middleware/passwordVal");
 const password = require("../middleware/password");
 const { validateEmail } = require("../middleware/emailVal");
+const { tokenCheck } = require("../middleware/token");
 
 const userRouter = Router();
 userRouter.post("/createAUser", password, hashPassword, createUser);
 userRouter.post("/userLogin", validateEmail, matchePasswds, userLogin);
-userRouter.get("/readData", readUsers);
+userRouter.get("/readData", tokenCheck, readUsers);
 userRouter.delete("/deleteData", deleteUser);
 userRouter.put("/updateUser", updateUser);
+// userRouter.get("/readUsers", tokenCheck, readUsers) // protected endpoint
 
 module.exports = userRouter;
