@@ -3,6 +3,8 @@ require("./db/connection");
 const express = require("express");
 const userRouter = require("./users/userRoutes");
 
+// import cookie-parser library
+const cookieParser = require("cookie-parser");
 // call express Application
 const app = express();
 
@@ -15,6 +17,7 @@ const port = process.env.PORT || 5001;
 // tell the server to use json format data only
 app.use(express.json());
 app.use(userRouter);
+app.use(cookieParser);
 // dfine a port
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);

@@ -82,12 +82,14 @@ exports.userLogin = async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     console.log(`Success! ${user.username} exists in the database`);
 
-    //generate a jwt token for the user
-    const token = await jwt.sign({ _id: user._id }, process.env.SECRET);
+    //generate a jwt token when the user is logged in
+    const token = await jwt.sign({ _id: user._id }, process.env.SECRET, {
+      expiresIn: 3600,
+    });
     console.log(token);
-    res
-      .status(202)
-      .send({ message: `${user.username} exists in the database`, token });
+    // save token in a cookie
+    res.cookie("token", token, { httpOnly: true });
+    res.status(202).send({ success: true, token: token });
   } catch (error) {
     console.log(error);
     console.log("username not found");
