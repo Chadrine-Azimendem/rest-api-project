@@ -1,8 +1,13 @@
 const User = require("./userModel");
 const jwt = require("jsonwebtoken");
 
+// test
+exports.greetings = (req, res) => {
+  res.json({ greetting: "Our controller is working propperly" });
+};
+
 // create a user
-exports.createUser = async (req, res) => {
+exports.createAccount = async (req, res) => {
   console.log("New user created:", req.body);
   try {
     await User.create(req.body);
@@ -12,7 +17,7 @@ exports.createUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     // send internal error status and the error message
-    res.status(500).send({ error: error.message });
+    res.status(400).send({ success: false, error: error.message });
   }
 };
 

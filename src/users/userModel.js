@@ -7,12 +7,11 @@ const userModel = new Schema({
   username: {
     type: String,
     require: true,
-    unique: true,
+    unique: [true, "username required"],
   },
   email: {
     type: String,
     require: [true, "Email required"],
-    unique: true,
     match: [
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "Please enter a valid email",
@@ -20,7 +19,12 @@ const userModel = new Schema({
   },
   password: {
     type: String,
-    require: true,
+    require: [true, "please enter a password "],
+  },
+
+  role: {
+    type: Number,
+    default: 0,
   },
 });
 

@@ -1,11 +1,12 @@
 // specify the endpoints here
 const { Router } = require("express");
 const {
-  createUser,
+  createAccount,
   readUsers,
   deleteUser,
   updateUser,
   userLogin,
+  greetings,
 } = require("./userControllers");
 
 const { hashPassword, matchePasswds } = require("../middleware/passwordVal");
@@ -14,11 +15,13 @@ const { validateEmail } = require("../middleware/emailVal");
 const { tokenCheck } = require("../middleware/token");
 
 const userRouter = Router();
-userRouter.post("/createAUser", password, hashPassword, createUser);
+userRouter.post("/createAccount", password, hashPassword, createAccount);
 userRouter.post("/userLogin", validateEmail, matchePasswds, userLogin);
 userRouter.get("/readData", tokenCheck, readUsers);
-userRouter.delete("/deleteData", deleteUser);
-userRouter.put("/updateUser", updateUser);
+userRouter.delete("/deleteData", tokenCheck, deleteUser);
+userRouter.put("/updateUser", tokenCheck, updateUser);
 // userRouter.get("/readUsers", tokenCheck, readUsers) // protected endpoint
+
+userRouter.get("/greet", greetings);
 
 module.exports = userRouter;
