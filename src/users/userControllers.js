@@ -1,7 +1,13 @@
 const User = require("./userModel");
+const jwt = require("jsonwebtoken");
+
+// test
+exports.greetings = (req, res) => {
+  res.json({ greetting: "Our controller is working propperly" });
+};
 
 // create a user
-exports.createUser = async (req, res) => {
+exports.createAccount = async (req, res) => {
   console.log("New user created:", req.body);
   try {
     await User.create(req.body);
@@ -11,7 +17,7 @@ exports.createUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     // send internal error status and the error message
-    res.status(500).send({ error: error.message });
+    res.status(400).send({ success: false, error: error.message });
   }
 };
 
@@ -75,9 +81,15 @@ exports.userLogin = async (req, res) => {
     // check if the user's username exist in the database
     const user = await User.findOne({ username: req.body.username });
     console.log(`Success! ${user.username} exists in the database`);
-    res
-      .status(202)
-      .send({ message: `${user.username} exists in the database` });
+
+    //generate a jwt token when the user is logged in
+    const token = await jwt.sign({ _id: user._id }, process.env.SECRET, {
+      expiresIn: 3600,
+    });
+    console.log(token);
+    // save token in a cookie
+    res.cookie("token", token, { httpOnly: true });
+    res.status(202).send({ success: true, token: token });
   } catch (error) {
     console.log(error);
     console.log("username not found");
