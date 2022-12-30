@@ -1,12 +1,13 @@
 const User = require("./userModel");
 const jwt = require("jsonwebtoken");
+const { restart } = require("nodemon");
 
 // test
 exports.greetings = (req, res) => {
   res.json({ greetting: "Our controller is working propperly" });
 };
 
-// create a user
+// create a users account
 exports.createAccount = async (req, res) => {
   console.log("New user created:", req.body);
   try {
@@ -21,6 +22,7 @@ exports.createAccount = async (req, res) => {
   }
 };
 
+// list all users in the database
 exports.readUsers = async (req, res) => {
   try {
     const users = await User.find({});
@@ -32,17 +34,14 @@ exports.readUsers = async (req, res) => {
   }
 };
 
+// update any field of the users data
 exports.updateUser = async (req, res) => {
   try {
     // define the filter
     const filter = { username: req.body.username };
+    // define the field the is been updated
     const update = { [req.body.field]: req.body.to };
-    // await User.updateOne(
-    //   filter,
-    //   //use the key that we pass in the body of the request so we can dynamically update any key in our
-    //   //database. the value is what we want to update it too
-    //   update
-    // );
+
     let updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
@@ -59,6 +58,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+// delete user controller
 exports.deleteUser = async (req, res) => {
   try {
     const filter = { username: req.body.username };
@@ -75,6 +75,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+// login controller
 exports.userLogin = async (req, res) => {
   console.log("middlewares passed and controller has been called");
   try {
@@ -94,5 +95,34 @@ exports.userLogin = async (req, res) => {
     console.log(error);
     console.log("username not found");
     res.status(501).send({ error: error.message });
+  }
+};
+
+// user logout
+// not working yet fix it
+exports.userLogout = async (req, res) => {
+  console.log("middlewares passed and controller has been called");
+  try {
+    res.clearCookie("token");
+    res
+      .status(200)
+      .send({ success: true, message: "user logged out successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(501).send({ error: error.message });
+  }
+};
+
+// read single user with custom error handling
+
+exports.readOneUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).send({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    next(error);
   }
 };
