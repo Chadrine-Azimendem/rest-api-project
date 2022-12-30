@@ -1,6 +1,7 @@
 const User = require("./userModel");
 const jwt = require("jsonwebtoken");
 const { restart } = require("nodemon");
+const ErrorResponse = require("../utils/errorResponse");
 
 // test
 exports.greetings = (req, res) => {
@@ -76,8 +77,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 // login controller
-exports.userLogin = async (req, res) => {
-  console.log("middlewares passed and controller has been called");
+exports.userLogin = async (req, res, next) => {
   try {
     // check if the user's username exist in the database
     const user = await User.findOne({ username: req.body.username });
@@ -93,15 +93,12 @@ exports.userLogin = async (req, res) => {
     res.status(202).send({ success: true, token: token });
   } catch (error) {
     console.log(error);
-    console.log("username not found");
-    res.status(501).send({ error: error.message });
+    next(new ErrorResponse("username not found", 501));
   }
 };
 
-// user logout
-// not working yet fix it
-exports.userLogout = async (req, res) => {
-  console.log("middlewares passed and controller has been called");
+// user logout not working yet fix it
+exports.userLogout = async (req, res, next) => {
   try {
     res.clearCookie("token");
     res
@@ -109,7 +106,7 @@ exports.userLogout = async (req, res) => {
       .send({ success: true, message: "user logged out successfully" });
   } catch (error) {
     console.log(error);
-    res.status(501).send({ error: error.message });
+    next(new ErrorResponse(error.message, 501));
   }
 };
 
@@ -123,6 +120,6 @@ exports.readOneUser = async (req, res, next) => {
       user,
     });
   } catch (error) {
-    next(error);
+    next(new ErrorResponse(`User with id: ${req.params.id} not found`, 404));
   }
 };

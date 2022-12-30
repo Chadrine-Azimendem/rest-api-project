@@ -1,7 +1,7 @@
 // import bcrypt
 const bcrypt = require("bcrypt");
-
 const User = require("../users/userModel");
+const ErrorResponse = require("../utils/errorResponse");
 
 // hash user password with salting of 12 saltRounds
 exports.hashPassword = async (req, res, next) => {
@@ -10,7 +10,7 @@ exports.hashPassword = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(417).send({ error: error.message });
+    next(new ErrorResponse(error.message, 417));
   }
 };
 
@@ -32,10 +32,11 @@ exports.matchePasswds = async (req, res, next) => {
       );
       next();
     } else {
-      throw new Error("incorect username or password");
+      // throw new Error("incorect username or password");
+      next(new ErrorResponse("incorect username or password", 401));
     }
   } catch (error) {
     console.log(error);
-    res.status(401).send({ error: error.message });
+    next(new ErrorResponse("incorect username or password", 401));
   }
 };

@@ -1,4 +1,5 @@
 const User = require("../users/userModel");
+const ErrorResponse = require("../utils/errorResponse");
 
 exports.validateEmail = async (req, res, next) => {
   try {
@@ -8,10 +9,11 @@ exports.validateEmail = async (req, res, next) => {
       console.log("the email is corect");
       next();
     } else {
-      throw Error("incorect username or password");
+      // throw Error("incorect username or password");
+      next(new ErrorResponse("incorect username or password", 401));
     }
   } catch (error) {
     console.log(error);
-    res.status(401).send({ error: error.message });
+    next(new ErrorResponse("incorect username or password", 401));
   }
 };
