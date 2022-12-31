@@ -4,7 +4,8 @@
   "description": "\"Ful rest API\" ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "server": "nodemon src/server.js --ignore client"
   },
   "keywords": [],
   "author": "Chadrine Azimendem",
