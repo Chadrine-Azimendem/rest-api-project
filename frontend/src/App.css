@@ -1,14 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:ital@0;1&family=Work+Sans:wght@400;500;800&display=swap");
 
-html {
-  height: 100%;
-}
 body {
   min-height: 100%;
   margin: 0;
   font-family: "Work Sans", sans-serif;
   text-align: center;
-  /* background-image: url("./images/pexels-jess-bailey-designs-3663314.jpg"); */
 }
 
 .main-wrapper {
@@ -24,19 +20,6 @@ nav {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-}
-
-a {
-  text-decoration: none;
-  color: white;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  margin: 2rem auto;
 }
 
 .list {
@@ -60,10 +43,17 @@ a {
   box-shadow: inset -4px -1em 4px 0px;
 }
 
-.sub-title {
-  color: #eee;
-  font-weight: 600;
-  margin-top: 10px;
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 2rem auto;
 }
 
 form {
@@ -79,17 +69,10 @@ form {
   box-sizing: border-box;
 }
 
-.label {
-  width: 60%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.label span {
-  width: 30%;
-  text-align: left;
-  font-size: 1.25rem;
+.sub-title {
   color: #eee;
+  font-weight: 600;
+  margin-top: 10px;
 }
 
 input {
