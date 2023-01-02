@@ -38,7 +38,7 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>Sign Up form</h1>
       <form>
         <label>

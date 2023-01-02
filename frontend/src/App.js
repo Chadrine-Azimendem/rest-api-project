@@ -4,29 +4,20 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/Signup">Signup</Link>
-          </li>
-          <li>
-            <Link to="/Signin">Signin</Link>
-          </li>
-        </ul>
-      </nav>
+    <div className="main-wrapper">
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Signup" element={<SignUp />} />
         <Route path="/Signin" element={<SignIn />} />
       </Routes>
-    </>
+      <Footer />
+    </div>
   );
 };
 
