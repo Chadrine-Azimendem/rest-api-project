@@ -39,29 +39,29 @@ const SignUp = () => {
 
   return (
     <div className="wrapper">
-      <h1>Sign Up form</h1>
       <form>
-        <label>
-          Your username:
-          <input
-            value={username}
-            onChange={handleChange("username")}
-            type="text"
-          />
-        </label>
-        <label>
-          Your email:
-          <input value={email} onChange={handleChange("email")} type="text" />
-        </label>
-        <label>
-          create password:
-          <input
-            value={password}
-            onChange={handleChange("password")}
-            type="text"
-          />
-        </label>
-        <button onClick={handleSubmit} type="submit">
+        <h1 className="sub-title">Sign Up form</h1>
+
+        <input
+          placeholder="Your username"
+          value={username}
+          onChange={handleChange("username")}
+          type="text"
+        />
+        <input
+          placeholder="Your email"
+          value={email}
+          onChange={handleChange("email")}
+          type="text"
+        />
+        <input
+          placeholder="Create password"
+          value={password}
+          onChange={handleChange("password")}
+          type="text"
+        />
+
+        <button className="btn" onClick={handleSubmit} type="submit">
           Signup
         </button>
       </form>
